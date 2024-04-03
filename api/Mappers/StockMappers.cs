@@ -9,44 +9,42 @@ namespace api.Mappers
 {
     public static class StockMappers
     {
-        public static StockDto ToStockDto(this Stock stockModel)
+        public static StockDtos ToStockDto(this Stock stockModel)
         {
-            return new StockDto
+            return new StockDtos 
             {
                 Id = stockModel.Id,
                 Symbol = stockModel.Symbol,
                 CompanyName = stockModel.CompanyName,
                 Purchase = stockModel.Purchase,
-                LastDiv = stockModel.LastDiv,
                 Industry = stockModel.Industry,
                 MarketCap = stockModel.MarketCap,
-                Comments = stockModel.Comments.Select(c => c.ToCommentDto()).ToList()
+                LastDiv = stockModel.LastDiv,
+                Comments = stockModel.Comments.Select(c => c.ToCommentDto()).ToList(),
             };
         }
 
-        public static Stock ToStockFromCreateDTO(this CreateStockRequestDto stockDto)
+        public static Stock FromCreatedDto(this CreateStockRequestDtos stockDto)
         {
-            return new Stock
-            {
+            return new Stock{
                 Symbol = stockDto.Symbol,
                 CompanyName = stockDto.CompanyName,
                 Purchase = stockDto.Purchase,
-                LastDiv = stockDto.LastDiv,
                 Industry = stockDto.Industry,
-                MarketCap = stockDto.MarketCap
+                MarketCap = stockDto.MarketCap,
+                LastDiv = stockDto.LastDiv,
             };
         }
-
-        public static Stock ToStockFromFMP(this FMPStock fmpStock)
+        public static Stock FromUpdateDtoToStock(this UpdateStockRequestDtos stockModel)
         {
-            return new Stock
+            return new Stock 
             {
-                Symbol = fmpStock.symbol,
-                CompanyName = fmpStock.companyName,
-                Purchase = (decimal)fmpStock.price,
-                LastDiv = (decimal)fmpStock.lastDiv,
-                Industry = fmpStock.industry,
-                MarketCap = fmpStock.mktCap
+                Symbol = stockModel.Symbol,
+                CompanyName = stockModel.CompanyName,
+                Purchase = stockModel.Purchase,
+                Industry = stockModel.Industry,
+                MarketCap = stockModel.MarketCap,
+                LastDiv = stockModel.LastDiv,
             };
         }
     }
